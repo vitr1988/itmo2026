@@ -5,7 +5,7 @@ import ru.itmo.spring.lesson1.service.CalculatorService;
 
 import java.math.BigDecimal;
 
-@Component
+//@Component
 public class SimpleCalculatorServiceImpl implements CalculatorService {
     @Override
     public Long getId() {

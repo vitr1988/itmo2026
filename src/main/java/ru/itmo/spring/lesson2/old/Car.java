@@ -1,7 +1,5 @@
 package ru.itmo.spring.lesson2.old;
 
-import lombok.Data;
-
 public class Car {
 
     private String model;

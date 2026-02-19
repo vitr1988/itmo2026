@@ -1,6 +1,7 @@
 package ru.itmo.spring.lesson1.service.impl;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import ru.itmo.spring.lesson1.service.CalculatorService;
 
@@ -8,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 @Component("defaultCalculatorService")
-@Scope("prototype")
+@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CalculatorServiceImpl implements CalculatorService {
 
     private Long id = new Random().nextLong();

@@ -1,12 +1,10 @@
 package ru.itmo.spring.lesson1.service.impl;
 
-import org.springframework.stereotype.Component;
 import ru.itmo.spring.lesson1.service.AccountService;
 import ru.itmo.spring.lesson2.dto.Account;
 
 import java.math.BigDecimal;
 
-@Component
 public class FakeAccountServiceImpl implements AccountService {
 
     @Override

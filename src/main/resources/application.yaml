@@ -1,3 +1,10 @@
 spring:
   application:
-    name: spring
+    name: spring-boot
+#  datasource:
+#    url:
+
+application.value: 150
+
+server:
+  port: 8090
