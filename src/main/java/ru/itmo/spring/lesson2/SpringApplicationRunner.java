@@ -5,13 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import ru.itmo.spring.lesson1.config.ApplicationProperties;
 import ru.itmo.spring.lesson1.service.AccountService;
 import ru.itmo.spring.lesson1.service.impl.AccountServiceImpl;
 import ru.itmo.spring.lesson2.dto.Account;
 
 import java.math.BigDecimal;
 
-@EnableConfigurationProperties
+@EnableConfigurationProperties({ApplicationProperties.class})
 @ComponentScan("ru.itmo.spring.lesson1")
 @SpringBootApplication
 public class SpringApplicationRunner {

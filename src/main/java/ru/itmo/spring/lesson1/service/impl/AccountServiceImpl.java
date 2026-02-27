@@ -2,6 +2,8 @@ package ru.itmo.spring.lesson1.service.impl;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.itmo.spring.lesson1.dao.PrintDao;
@@ -14,20 +16,17 @@ import java.util.Random;
 
 @Service
 @Primary
+@RequiredArgsConstructor
 //@Scope("prototype")
 public class AccountServiceImpl implements AccountService {
 
+    @Getter
     private Long id = new Random().nextLong();
 
-    private CalculatorService calculatorService;
-    private PrintDao printDao;
+    private final CalculatorService calculatorService;
+    private final PrintDao printDao;
 //    private AccountService fakeAccountService;
 //    private ApplicationContext applicationContext;
-
-    public AccountServiceImpl(CalculatorService calculatorService, PrintDao printDao) {
-        this.calculatorService = calculatorService;
-        this.printDao = printDao;
-    }
 
     @PostConstruct
     public void postInitializaton() {
@@ -60,10 +59,6 @@ public class AccountServiceImpl implements AccountService {
 //        deposit(account, new BigDecimal(-1).multiply(value));
         account.setBalance(getCalculatorService().minus(account.getBalance(), value));
         printDao.save(account);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override

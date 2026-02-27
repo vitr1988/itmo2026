@@ -1,9 +1,8 @@
 package ru.itmo.spring.lesson1.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @ConfigurationProperties(prefix = "application")
 public class ApplicationProperties {
     private Long value;

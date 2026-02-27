@@ -1,10 +1,14 @@
 spring:
   application:
     name: spring-boot
-#  datasource:
-#    url:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
 
-application.value: 150
+application:
+  value: 150
+  file: 'file:test.txt'
 
 server:
   port: 8090
