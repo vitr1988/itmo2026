@@ -7,10 +7,15 @@ spring:
     password: root
   jpa:
     show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: 'classpath:db-migrations/changelog.xml'
 
 application:
   value: 150
   file: 'file:test.txt'
 
-server:
-  port: 8090
+#server:
+#  port: 8090
