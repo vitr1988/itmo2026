@@ -4,29 +4,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itmo.spring.lesson6.dto.AccountDto;
+import ru.itmo.spring.lesson6.mapper.AccountMapper;
 import ru.itmo.spring.lesson6.model.Account;
 import ru.itmo.spring.lesson6.repository.AccountRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
 
     @Transactional
     public String register(AccountDto accountDto) {
-        Account result = accountRepository.save(convert(accountDto));
+        Account result = accountRepository.save(accountMapper.toEntity(accountDto));
         return result.getAccountNumber();
     }
 
     @Transactional(readOnly = true)
     public AccountDto findById(String accountNumber) {
         return accountRepository.findById(accountNumber)
-                .map(AccountService::convertAsDto)
+                .map(accountMapper::toDto)
                 .orElse(null);
     }
 
@@ -34,7 +35,7 @@ public class AccountService {
     public List<AccountDto> findAll() {
         return accountRepository.findAll()
                 .stream()
-                .map(AccountService::convertAsDto)
+                .map(accountMapper::toDto)
                 .toList();
     }
 
@@ -49,21 +50,6 @@ public class AccountService {
         return accountRepository.findById(accountNumber).map(it -> {
             it.setBalance(it.getBalance().add(balance));
             return it;
-        }).map(AccountService::convertAsDto).orElse(null);
-    }
-
-    private static Account convert(AccountDto accountDto) {
-        Account account = new Account();
-        account.setOwner(accountDto.getOwner());
-        account.setBalance(accountDto.getBalance());
-        account.setAccountNumber(UUID.randomUUID().toString());
-        return account;
-    }
-
-    private static AccountDto convertAsDto(Account account) {
-        AccountDto accountDto = new AccountDto();
-        accountDto.setOwner(account.getOwner());
-        accountDto.setBalance(account.getBalance());
-        return accountDto;
+        }).map(accountMapper::toDto).orElse(null);
     }
 }

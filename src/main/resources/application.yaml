@@ -12,6 +12,11 @@ spring:
       ddl-auto: validate
   liquibase:
     change-log: 'classpath:db-migrations/changelog.xml'
+  security:
+    user:
+      name: admin
+      password: secret123
+      roles: ADMIN
 
 application:
   value: 150
@@ -19,3 +24,8 @@ application:
 
 #server:
 #  port: 8090
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  packages-to-scan: ru.itmo.spring.lesson6.controller
