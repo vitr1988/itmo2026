@@ -3,14 +3,14 @@ package ru.itmo.spring.lesson5;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import ru.itmo.spring.lesson5.dao.GroupDao;
-import ru.itmo.spring.lesson5.dao.StudentDao;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import ru.itmo.spring.lesson5.model.Group;
 import ru.itmo.spring.lesson5.repository.GroupRepository;
 import ru.itmo.spring.lesson5.repository.StudentRepository;
 
 import java.util.List;
 
+@EnableJpaRepositories("ru.itmo.spring.lesson5.repository")
 @SpringBootApplication
 //@EntityScan({"lesson5", "lesson4"})
 public class HibernateRunner {

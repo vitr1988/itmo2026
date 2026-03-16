@@ -1,0 +1,77 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Vitalii Ivanov" id="Create-table-groups">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="groups"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="groups">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Vitalii Ivanov" id="Modify-table-groups-add-new-column-name_en">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists columnName="name_en" tableName="groups"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="groups">
+            <column name="name_en" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Vitalii Ivanov" id="Create-table-students">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="students"/>
+            </not>
+        </preConditions>
+        <createTable tableName="students">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="bigint">
+                <constraints foreignKeyName="students_groups_id_fk"
+                             references="groups(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Vitalii Ivanov" id="Create-table-accounts">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="accounts"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="accounts">
+            <column name="account_number" type="varchar(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="owner" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="balance" type="numeric"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

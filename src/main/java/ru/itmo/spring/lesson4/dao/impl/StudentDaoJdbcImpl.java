@@ -8,14 +8,12 @@ import ru.itmo.spring.lesson4.dao.StudentDao;
 import ru.itmo.spring.lesson4.model.Group;
 import ru.itmo.spring.lesson4.model.Student;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class StudentDaoImpl implements StudentDao {
+public class StudentDaoJdbcImpl implements StudentDao {
 
     public static final RowMapper<Student> STUDENT_ROW_MAPPER = (rs, rowNum) -> {
         Student student = new Student();

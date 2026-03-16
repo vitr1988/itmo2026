@@ -1,0 +1,16 @@
+### Получить jwt
+POST http://localhost:8080/jwt
+Content-Type: application/json
+
+{
+  "login": "vitr",
+  "rights": ["ROLE_ADMIN"]
+}
+
+> {%
+    client.global.set("jwt", response.body);
+%}
+
+### Получить информацию по всем счетам
+GET http://localhost:8080/api/accounts
+Authorization: Bearer {{jwt}}

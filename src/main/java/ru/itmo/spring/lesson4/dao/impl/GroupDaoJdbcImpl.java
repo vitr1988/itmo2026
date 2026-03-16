@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class GroupDaoImpl implements GroupDao {
+public class GroupDaoJdbcImpl implements GroupDao {
 
     private static final RowMapper<Group> GROUP_ROW_MAPPER =
             (rs, rowNum) -> new Group(rs.getInt("id"), rs.getString("name"));
