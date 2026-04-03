@@ -1,0 +1,54 @@
+@startuml Взаимодействие_систем_с_сглаживанием
+!theme plain
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+actor "Клиент чата" as U
+participant "Система 573\n<b>chat-core</b>" as A
+participant "Система 573\n<b>Kafka</b>" as Q
+participant "Система 573\n<b>chat-bot-adapter</b>\n(RL)" as C
+participant "Система 1568" as B
+
+U -> A: WS send_message
+activate A
+A -> Q: publish message
+activate Q
+Q --> A: commit offset
+deactivate A
+deactivate Q
+
+note over Q, C: Background scheduler (for potential shifts of offsets)
+loop Consumer poll\n(40 RPS:\nbatch=4,\npartition=10,\nfetch_delay=1s)
+    activate C
+    C -> Q: poll
+    activate Q
+    Q -> C: messages
+    C -> B: HTTP POST /send\n(separate executor threads)
+    activate B
+
+    B --> C: 200 OK
+
+
+    Q --> C: commit offset
+
+    deactivate Q
+    deactivate C
+    deactivate B
+end
+
+    B -> B: Chatbot is processing
+
+    B -> C: POST /sendBotReply
+
+    C -> Q: bot-reply
+
+    A -> Q: poll chatbot-reply
+    activate Q
+    activate A
+    Q --> A: commit offset
+    deactivate Q
+
+    A --> U: WS receive_message
+    deactivate A
+
+@enduml
